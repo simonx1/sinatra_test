@@ -8,6 +8,23 @@ configure do
   # set :bind, '0.0.0.0'
 end
 
+before do
+
+  if request.request_method != 'GET'
+    # Pull out the authorization header
+    if env['HTTP_AUTHORIZATION'] && env['HTTP_AUTHORIZATION'].split(':').length == 2
+      auth_header = env['HTTP_AUTHORIZATION'].split(':')
+    else
+      halt 401
+    end
+
+    public_key  = auth_header[0]
+    signature   = auth_header[1]
+
+    halt 403 if public_key != '123'
+  end
+end
+
 ################################
 # Application Routes
 ################################
@@ -20,6 +37,7 @@ end
 # Service1: Return all our Text entities
 post "/api/events" do
   content_type :json  
+  200
 end
 
 ################################
