@@ -1,11 +1,13 @@
 # application.rb
 require 'sinatra'
 
+# require 'json'
+
 configure do
   set :show_exceptions, true
 
   # Un-comment this if you are using Vagrant or any type of VM/container such as Docker
-  # set :bind, '0.0.0.0'
+  set :bind, '0.0.0.0'
 end
 
 before do
@@ -37,6 +39,8 @@ end
 # Service1: Return all our Text entities
 post "/api/events" do
   content_type :json  
+  # params = JSON.parse(request.env["rack.input"].read)
+  # puts params.inspect
   200
 end
 
